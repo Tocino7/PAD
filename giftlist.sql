@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2016 a las 13:43:07
+-- Tiempo de generación: 09-05-2016 a las 13:53:18
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nombre` varchar(255) NOT NULL,
   `telefono` varchar(9) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `Nacimiento` date NOT NULL,
   PRIMARY KEY (`nombre`,`telefono`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
