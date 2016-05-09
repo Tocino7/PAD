@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Añadir establecimiento </title>
+	<link  rel= "stylesheet"  href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  integrity= "sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"  crossorigin= "anonymous" >
+        <link rel="stylesheet" href="css/style.css"> 
+		 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+		<script type="text/javascript"  src="http://googleapis.com/api/js?sensor=false"</script>   
+		<script type = "text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<!-- archivos javascript de bootstrap-->
+		<script type ="text/javascript" src="js/bootstrap.min.js"> </script>
+		<script>
+			var marcadores_nuevos = [];
+			//Funcion para quitar los marcadores del mapa
+			function quitar_marcadores(lista)
+			{
+				//Recorremos el array de marcadores
+				for (i in lista)
+				{
+					//quitar marcador del mapa
+					lista[i].setMap(null);
+				}
+			}
+				$(document).on("ready",function(){
+				
+					var formulario = $("#formulario");
+					// Coordenadas iniciales
+					//variable para el punto iniciales
+					var punto = new google.maps.Latlng(-13.163622,-72.545926);
+					//variable para configuracion inicial
+					var config = {
+						zoom:16,
+						center:punto,
+						mapTypeId:google.maps.MapTypeId.ROADMAP
+					};
+					//variable del mapa
+					var mapa = new google.maps.Map( $(#mapa)[0],config );
+					
+					google.maps.event.addListener(mapa,"click",function(event){
+					//Muestra una alerta al hacer click en el mapa
+					var coordenadas = event.latLng.toString();
+					
+					coordenadas = coordenadas.replace("(","");
+					coordenadas = coordenadas.replace(")","");
+					
+					// coordenadas por separado
+					var lista = coordenadas.split(",");
+					
+					// Muestra las coordenadas por separado
+					//alert("La coordenada X es" + lista[0]);
+					//alert("La coordenada Y es" + lista[1]);
+					
+					//variable para direccion, punto o coordenada
+					var direccion = new google.maps.LatLng(lista[0], lista[1]);
+					
+					//variable para marcador
+					var marcador = new google.maps.Marker({
+						position:direccion,
+						map: mapa,
+						animation: google.maps.Animation.DROP, // como aparecerá el marcador
+						draggable:false; // no permitir el arrastre del marcador
+					});
+					
+					//Pasamos las coordenadas al formulario
+					formulario.find("input[name='cx']").val(lista[0]);
+					formulario.find("input[name='cy']").val(lista[1]);
+					formulario.find("input[name='titulo']").focus();
+					//Dejamos un sólo marcador
+					//Guardamos el marcador en el array
+					marcadores_nuevos.push(marcador);
+					//agregar evento click al marcador
+					google.maps.event.addListener(marcador,"click",function(){
+					
+					});
+					//Antes de ubicar el marcador en el mapa, quitamos los demás
+					quitar_marcadores(marcadores_nuevos);
+					//marcador.setMap(mapa);
+					//ubicar el marcador en el mapa
+					marcador.setMap(mapa);
+					
+				)};
+				
+				
+				
+			});
+		</script>
+	
+  </head>
+
+  <body>
+
+    <div class="wrapper">
+		<div class="container">
+			<h4><img src="./css/regalo.png"class="img-rounded" alt="Cinque Terre" width = "30" height = "30">Giftlist</h4>
+			<h2><img src="./css/add.png"class="img-rounded" alt="Cinque Terre" width = "40" height = "40">Añadir establecimiento </h2>
+			<ul class="nav nav-tabs">
+				<li><a href="addRegalo.html">General</a></li>
+			  <li class="active"><a href="#">Establecimiento</a></li>
+			  <li><a href="addRegalo-prioridad.html">Prioridad</a></li>
+			</ul>
+			</br>
+			</br>
+			<div class="row">
+			  <div class="col-lg-15">
+				<div class="input-group">
+				  <input type="text" class="form-control">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" type="button">Buscar</button>
+				  </span>
+				</div>
+			  </div>
+			</div>
+			
+			<div id = "mapa">
+				<h2> Aquí irá el mapa </h2>
+			</div>
+		<div id = "infor">
+			<form id ="formulario">
+				<table>
+					<tr>
+						<td>Título </td>
+						<td><input type="text" class = "form-control" name="titulo" autocomplete=off/> </td>
+					</tr>
+					<tr>
+						<td>Coordenada X </td>
+						<td><input type="text" class = "form-control" disabled = "disabled" name="cx" autocomplete=off/> </td>
+					</tr>
+					<tr>
+						<td>Coordenada Y </td>
+						<td><input type="text" class = "form-control" disabled = "disabled" name="cy" autocomplete=off/> </td>
+					</tr>
+					<tr>
+						<td><button type= "button" class= "btn btn-success btm-sm">Aceptar</button></td>
+						<td><button type= "button" class= "btn btn-danger btm-sm">Cancelar</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		</div>
+
+	</div>
+   
+		
+  </body>
+  <!-- BORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRR->
+  <!-- https://www.youtube.com/watch?v=1b4NzbSJ7dI-->
+</html>
